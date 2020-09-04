@@ -5,11 +5,12 @@ require('dotenv').config();
 const apikey = process.env.API_KEY;
 
 const fetchData = async (url) => {
-    const movieResponse = await fetch(url);
-    const json = await movieResponse.json();
+    const response = await fetch(url);
+    const json = await response.json();
     return json;
 };
 
+//get the list of movies
 const getMoviesList = async (req, res, next) => {
     const {title, page} = req.params;
 
@@ -29,6 +30,7 @@ const getMoviesList = async (req, res, next) => {
     res.json(await fetchData(url));
 }
 
+//get details on specific movie
 const getMovieDetails = async(req, res, next) => {
     const title = req.params.title;
 
