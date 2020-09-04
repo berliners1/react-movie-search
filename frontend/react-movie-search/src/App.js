@@ -8,17 +8,19 @@ function App() {
     //state for <Movieslist>
     const[searchedMovieName, setSearchedMovieName] = useState("");
     const[searchedMoviePage, setSearchedMoviePage] = useState();
+    const[showMoviesList, setShowMoviesList] = useState(false);
 
     //get data from Controls to send to MoviesList
     function addNewDataHandler(title, pagenum){
       setSearchedMovieName(title);
       setSearchedMoviePage(pagenum);
+      setShowMoviesList(true);
     }
 
   return (
     <>
       <Controls childToParent={addNewDataHandler} />
-      <MoviesList title={searchedMovieName} pagenum={searchedMoviePage} />
+      {showMoviesList && <MoviesList title={searchedMovieName} pagenum={searchedMoviePage} />}
       <MovieDetails />
     </>
   );
