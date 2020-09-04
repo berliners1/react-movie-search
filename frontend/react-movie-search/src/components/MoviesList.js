@@ -1,9 +1,14 @@
 import React from 'react';
 
-function MoviesList() {
+function MoviesList(props) {
 
     //will fetch list of movies
-    return <p>Movies List</p>;
+    return( 
+    <>
+        <p>{props.title}</p>
+        <p>{props.pagenum}</p>
+    </>
+    );
 
 }
 
