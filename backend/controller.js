@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const fetch = require('node-fetch');
 require('dotenv').config();
 
 const apikey = process.env.API_KEY;
@@ -19,6 +20,11 @@ const getMoviesList = (req, res, next) => {
     const url = `https://www.omdbapi.com/?s=${title}&page=${page}&type=movie&r=json&apikey=${apikey}`;
 
     //fetch using url
+    (async () => {
+        const movieResponse = await fetch(url);
+        const json = await movieResponse.json();
+        res.json({json});
+    })();
 }
 
 const getMovieDetails = async(req, res, next) => {
@@ -37,6 +43,11 @@ const getMovieDetails = async(req, res, next) => {
     const url = `https://www.omdbapi.com?t=${title}&r=json&apikey=${apikey}`;
     
     //fetch using url
+    (async () => {
+        const movieResponse = await fetch(url);
+        const json = await movieResponse.json();
+        res.json({json});
+    })();
 }
 
 exports.getMoviesList = getMoviesList;
