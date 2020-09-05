@@ -8,15 +8,18 @@ function Controls(props) {
     const onChangePagenum = event => setPagenum(event.target.value);
 
     //Pass API data to MoviesList here:
-    function passApiData(){
+    function passApiData(event){
+        event.preventDefault();
         props.childToParent(title, pagenum);
     }
 
     return (
         <>
+        <form onSubmit={passApiData}>
             <input type="text" value={title} onChange={onChangeTitle} />
             <input type="number" value={pagenum} onChange={onChangePagenum} />
-            <button onClick={passApiData}>Search Movie</button>
+            <button type="submit">Search Movie</button>
+        </form>
         </>
     );
 }
