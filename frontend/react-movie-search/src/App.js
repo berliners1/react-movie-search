@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import Controls from './components/Controls';
+import SearchControls from './components/SearchControls';
 import MoviesList from './components/MoviesList';
 import MovieDetails from './components/MovieDetails';
 
@@ -11,16 +11,15 @@ function App() {
     const[showMoviesList, setShowMoviesList] = useState(false);
 
     //get data from Controls to send to MoviesList
-    function addNewDataHandler(title, pagenum){
+    function addNewDataHandler(title){
       setSearchedMovieName(title);
-      setSearchedMoviePage(pagenum);
       setShowMoviesList(true);
     }
 
   return (
     <>
-      <Controls childToParent={addNewDataHandler} />
-      {showMoviesList && <MoviesList title={searchedMovieName} pagenum={searchedMoviePage} />}
+      <SearchControls childToParent={addNewDataHandler} />
+      {showMoviesList && <MoviesList title={searchedMovieName} />}
       <MovieDetails />
     </>
   );

@@ -4,9 +4,9 @@ function MoviesList(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-
+  const [pagenum, setPagenum] = useState(1);
   useEffect(() => {
-    fetch(`http://localhost:5000/api/s=${props.title}&page=${props.pagenum}`)
+    fetch(`http://localhost:5000/api/s=${props.title}&page=${pagenum}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -22,7 +22,9 @@ function MoviesList(props) {
           setError(error);
         }
       )
-  }, [props.title, props.pagenum])
+  }, [props.title, pagenum])
+
+  const onChangePagenum = event => setPagenum(event.target.value);
 
   if (error) {
     return <div>Error - could not search with these queries.</div>;
@@ -33,6 +35,9 @@ function MoviesList(props) {
   } else {
     return (
       <>
+      <div className="search-controls">
+        <input type="number" value={pagenum} onChange={onChangePagenum} />
+      </div>
       <ul>
         {items.map(item => (
           <li key={item.imdbID}>
