@@ -5,29 +5,19 @@ function MoviesList(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+  const [itemsAmt, setItemsAmt] = useState(null);
 
   const [pagenum, setPagenum] = useState(1);
-  const [goToPagenum, setGoToPagenum] = useState(null);
-  const [resetPagenum, setResetPagenum] = useState(true);
-
-  let url;
   
   useEffect(() => {
-    if(resetPagenum === true){
-      url = `http://localhost:5000/api/s=${props.title}&page=1`
-      setPagenum(1);
-      setGoToPagenum(1);
-    } else {
-      url = `http://localhost:5000/api/s=${props.title}&page=${pagenum}`
-    }
-    fetch(url)
+    fetch(`http://localhost:5000/api/s=${props.title}&page=${pagenum}`)
     .then(res => res.json())
     .then(
       (result) => {
         setError(null);
         setIsLoaded(true);
         setItems(result.Search);
-        setResetPagenum(true);
+        setItemsAmt(result.totalResults);
       },
       // Note: it's important to handle errors here
       // instead of a catch() block so that we don't swallow
@@ -37,13 +27,23 @@ function MoviesList(props) {
         setError(error);
       }
     )
-  }, [props.title, goToPagenum])
+  }, [props.title, pagenum])
+
+  let pages = Math.ceil(itemsAmt / 10);
 
   const onChangePagenum = event => setPagenum(event.target.value);
-  const goToPage = () => {
-    setGoToPagenum(pagenum);
-    setResetPagenum(false);
-  };
+
+  //page back and forward buttons
+  const pageBack = () => {
+    if(pagenum > 1){
+      setPagenum(pagenum - 1);
+    }
+  }
+  const pageForward = () => {
+    if(pagenum < pages){
+      setPagenum(parseInt(pagenum) + 1);
+    }
+  }
 
   if (error) {
     return <div>Error - could not search with these queries.</div>;
@@ -52,11 +52,20 @@ function MoviesList(props) {
   } else if (items === undefined){
     return <p>Could not find anything.</p>
   } else {
+    
     return (
       <>
-      <div className="search-controls">
-        <input type="number" value={pagenum} onChange={onChangePagenum} />
-        <button onClick={goToPage}>Go To Page</button>
+      <div className="pagination-controls">
+        <p>pages: {pages} -- items: {itemsAmt}</p>
+
+        <select value={pagenum} onChange={onChangePagenum}>
+          {[...Array(pages)].map((x, i) =>
+            <option value={i+1} key={i+1}>{i+1}</option>
+          )}
+        </select>
+
+        <button onClick={pageBack}>«</button>
+        <button onClick={pageForward}>»</button>
       </div>
 
       <MoviesListGrid items={items} />
