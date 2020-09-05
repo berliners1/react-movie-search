@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import MoviesListGrid from './MoviesListGrid';
 
 function MoviesList(props) {
   const [error, setError] = useState(null);
@@ -38,13 +39,8 @@ function MoviesList(props) {
       <div className="search-controls">
         <input type="number" value={pagenum} onChange={onChangePagenum} />
       </div>
-      <ul>
-        {items.map(item => (
-          <li key={item.imdbID}>
-            {item.Title}
-          </li>
-        ))}
-      </ul>
+
+      <MoviesListGrid items={items} />
       </>
     );
   }
