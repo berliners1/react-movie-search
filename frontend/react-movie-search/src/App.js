@@ -9,17 +9,19 @@ function App() {
     const[searchedMovieName, setSearchedMovieName] = useState("");
     const[searchedMoviePage, setSearchedMoviePage] = useState();
     const[showMoviesList, setShowMoviesList] = useState(false);
+    const[pageReset, setPageReset] = useState(null);
 
     //get data from Controls to send to MoviesList
     function addNewDataHandler(title){
       setSearchedMovieName(title);
       setShowMoviesList(true);
+      setPageReset(true); //reset pages on each title search
     }
 
   return (
     <>
       <SearchControls childToParent={addNewDataHandler} />
-      {showMoviesList && <MoviesList title={searchedMovieName} />}
+      {showMoviesList && <MoviesList title={searchedMovieName} pageReset={pageReset} />}
       <MovieDetails />
     </>
   );

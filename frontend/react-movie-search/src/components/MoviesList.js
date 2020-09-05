@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MoviesListGrid from './MoviesListGrid';
 
+
 function MoviesList(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -8,9 +9,19 @@ function MoviesList(props) {
   const [itemsAmt, setItemsAmt] = useState(null);
 
   const [pagenum, setPagenum] = useState(1);
+  const [resetPagenum, setResetPagenum] = useState(props.pageReset);
   
+  let url;
   useEffect(() => {
-    fetch(`http://localhost:5000/api/s=${props.title}&page=${pagenum}`)
+    setResetPagenum(props.pageReset);
+    if(resetPagenum === true){
+      url = `http://localhost:5000/api/s=${props.title}&page=1`
+      setPagenum(1);
+      setResetPagenum(false);
+    } else {
+      url = `http://localhost:5000/api/s=${props.title}&page=${pagenum}`
+    }
+    fetch(url)
     .then(res => res.json())
     .then(
       (result) => {
@@ -31,15 +42,20 @@ function MoviesList(props) {
 
   let pages = Math.ceil(itemsAmt / 10);
 
-  const onChangePagenum = event => setPagenum(event.target.value);
+  const onChangePagenum = event => {
+    setPagenum(event.target.value);
+    setResetPagenum(false);
+  };
 
-  //page back and forward buttons
   const pageBack = () => {
+    setResetPagenum(false);
     if(pagenum > 1){
       setPagenum(pagenum - 1);
     }
   }
+  
   const pageForward = () => {
+    setResetPagenum(false);
     if(pagenum < pages){
       setPagenum(parseInt(pagenum) + 1);
     }
@@ -52,7 +68,6 @@ function MoviesList(props) {
   } else if (items === undefined){
     return <p>Could not find anything.</p>
   } else {
-    
     return (
       <>
       <div className="pagination-controls">
