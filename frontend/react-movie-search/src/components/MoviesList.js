@@ -8,27 +8,42 @@ function MoviesList(props) {
 
   const [pagenum, setPagenum] = useState(1);
   const [goToPagenum, setGoToPagenum] = useState(null);
+  const [resetPagenum, setResetPagenum] = useState(true);
+
+  let url;
+  
   useEffect(() => {
-    fetch(`http://localhost:5000/api/s=${props.title}&page=${pagenum}`)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          setError(null);
-          setIsLoaded(true);
-          setItems(result.Search);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      )
+    if(resetPagenum === true){
+      url = `http://localhost:5000/api/s=${props.title}&page=1`
+      setPagenum(1);
+      setGoToPagenum(1);
+    } else {
+      url = `http://localhost:5000/api/s=${props.title}&page=${pagenum}`
+    }
+    fetch(url)
+    .then(res => res.json())
+    .then(
+      (result) => {
+        setError(null);
+        setIsLoaded(true);
+        setItems(result.Search);
+        setResetPagenum(true);
+      },
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+      (error) => {
+        setIsLoaded(true);
+        setError(error);
+      }
+    )
   }, [props.title, goToPagenum])
 
   const onChangePagenum = event => setPagenum(event.target.value);
-  const goToPage = () => setGoToPagenum(pagenum);
+  const goToPage = () => {
+    setGoToPagenum(pagenum);
+    setResetPagenum(false);
+  };
 
   if (error) {
     return <div>Error - could not search with these queries.</div>;
