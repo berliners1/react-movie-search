@@ -5,7 +5,9 @@ function MoviesList(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+
   const [pagenum, setPagenum] = useState(1);
+  const [goToPagenum, setGoToPagenum] = useState(null);
   useEffect(() => {
     fetch(`http://localhost:5000/api/s=${props.title}&page=${pagenum}`)
       .then(res => res.json())
@@ -23,9 +25,10 @@ function MoviesList(props) {
           setError(error);
         }
       )
-  }, [props.title, pagenum])
+  }, [props.title, goToPagenum])
 
   const onChangePagenum = event => setPagenum(event.target.value);
+  const goToPage = () => setGoToPagenum(pagenum);
 
   if (error) {
     return <div>Error - could not search with these queries.</div>;
@@ -38,6 +41,7 @@ function MoviesList(props) {
       <>
       <div className="search-controls">
         <input type="number" value={pagenum} onChange={onChangePagenum} />
+        <button onClick={goToPage}>Go To Page</button>
       </div>
 
       <MoviesListGrid items={items} />
