@@ -11,8 +11,8 @@ function MoviesList(props) {
   const [pagenum, setPagenum] = useState(1);
   const [resetPagenum, setResetPagenum] = useState(props.pageReset);
   
-  let url;
   useEffect(() => {
+    let url;
     setResetPagenum(props.pageReset);
     if(resetPagenum === true){
       url = `http://localhost:5000/api/s=${props.title}&page=1`

@@ -1,12 +1,16 @@
 import React from 'react';
+import {NavLink} from "react-router-dom";
 
 function MoviesListGrid(props){
     return(
         <ul>
             {props.items.map(item => (
-            <li key={item.imdbID}>
-                {item.Title}
-            </li>
+            <NavLink key={item.imdbID} to={item.Title}>
+                <li>
+                    {item.Title}
+                </li>
+            </NavLink>
+
             ))}
         </ul>
     )
