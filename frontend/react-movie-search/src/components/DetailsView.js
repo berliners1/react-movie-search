@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {NavLink, useParams} from "react-router-dom";
+import SpecificMovieDetails from './SpecificMovieDetails';
 
 function MovieDetails() {
     const [error, setError] = useState(null);
@@ -38,9 +39,7 @@ function MovieDetails() {
     return (
         <>
             <NavLink to="/">Back</NavLink>
-            <p>{items.Title}</p>
-            <p>{items.Year}</p>
-            <p>{items.Rated}</p>
+            <SpecificMovieDetails items={items} />
         </>
         );
     }

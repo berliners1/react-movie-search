@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import './App.css';
 import SearchControls from './components/SearchControls';
 import MoviesList from './components/MoviesList';
-import MovieDetails from './components/MovieDetails';
+import MovieDetails from './components/DetailsView';
 
 function App() {
     //state for <Movieslist>
