@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import {NavLink, useParams} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
 import SpecificMovieDetails from './SpecificMovieDetails';
 
 function DetailsView() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
+    const history = useHistory();
 
     //will fetch details of specific movie based on url
     let {movietitle} = useParams();
 
     useEffect(() => {
+        console.log(history);
         fetch(`http://localhost:5000/api/t=${movietitle}`)
         .then(res => res.json())
         .then(
@@ -29,6 +31,14 @@ function DetailsView() {
         )
     }, [movietitle])
 
+    const goBackFunction = () => {
+        if(history.length > 2){
+            history.goBack();
+        } else {
+            history.push(`/`);
+        }
+    }
+
     if (error) {
     return <div>Error - could not search for a movie.</div>;
     } else if (!isLoaded) {
@@ -38,7 +48,7 @@ function DetailsView() {
     } else {
     return (
         <>
-            <NavLink to="/">Back</NavLink>
+            <button onClick={goBackFunction}>Back</button>
             <SpecificMovieDetails items={items} />
         </>
         );
