@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, NavLink, useParams } from 'react-router-dom';
+import { useHistory, NavLink, useParams, Redirect } from 'react-router-dom';
 import MoviesListGrid from './MoviesListGrid';
 
 let firstRun = true;
@@ -77,30 +77,35 @@ function MoviesList(props) {
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else if (items === undefined){
-    return <p>Could not find anything.</p>
+    return <p>Could not find anything.</p>;
   } else {
-    return (
-      <>
-      <div className="pagination-controls">
-        <p>pages: {pages} -- items: {itemsAmt}</p>
+    if(pages){
+      return (
+        <>
+        <div className="pagination-controls">
+          <p>pages: {pages} -- items: {itemsAmt}</p>
+  
+          <div>
+          {[...Array(pages)].map((x, i) => (
+            <span key={i+1}> 
+              <NavLink to={`/t=${props.title}&p=${parseInt(i+1)}`} onClick={() => onChangePagenum(i)}>{i+1}</NavLink>-
+            </span>
+          ))}
+          </div>
+  
+          <NavLink to={`/t=${props.title}&p=${parseInt(pagenum-1)}`} onClick={pageBack}>«</NavLink>
+          <NavLink to={`/t=${props.title}&p=${parseInt(pagenum+1)}`} onClick={pageForward}>»</NavLink>
+        </div> 
+        
+  
+        <MoviesListGrid items={items} />
+  
+        </>
+      );
+    } else {
+      return <p>Search failed for unknown reason.</p>
+    }
 
-        <div>
-        {[...Array(pages)].map((x, i) => (
-          <span key={i+1}> 
-            <NavLink to={`/t=${props.title}&p=${parseInt(i+1)}`} onClick={() => onChangePagenum(i)}>{i+1}</NavLink>-
-          </span>
-        ))}
-        </div>
-
-        <NavLink to={`/t=${props.title}&p=${parseInt(pagenum-1)}`} onClick={pageBack}>«</NavLink>
-        <NavLink to={`/t=${props.title}&p=${parseInt(pagenum+1)}`} onClick={pageForward}>»</NavLink>
-      </div> 
-      
-
-      <MoviesListGrid items={items} />
-
-      </>
-    );
   }
 
 }
