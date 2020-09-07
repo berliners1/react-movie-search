@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory , useParams} from 'react-router-dom';
 
 function SearchControls(props) {
     const [title, setTitle] = useState('');
     const history = useHistory();
-    
+    const {t,p} = useParams();
+
+
+    useEffect(() => {
+        //if title exists in url parameters, and if input is empty
+        if(t && title === ""){
+            console.log('t exists and form is empty');
+            setTitle(t);
+        }
+    }, []);
+
     const onChangeTitle = event => {
         setTitle(event.target.value);
     };

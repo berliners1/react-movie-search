@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import SearchControls from './components/SearchControls';
 import MoviesList from './components/MoviesList';
-import MovieDetails from './components/DetailsView';
+import DetailsView from './components/DetailsView';
 
 function App() {
     //state for <Movieslist>
@@ -31,7 +31,7 @@ function App() {
         </Route>
 
         <Route path="/movie/:movietitle" exact>
-          <MovieDetails />
+          <DetailsView />
         </Route>
       </Switch>
 

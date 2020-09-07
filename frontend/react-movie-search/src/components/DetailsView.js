@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {NavLink, useParams} from "react-router-dom";
 import SpecificMovieDetails from './SpecificMovieDetails';
 
-function MovieDetails() {
+function DetailsView() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -45,4 +45,4 @@ function MovieDetails() {
     }
 }
 
-export default MovieDetails;
+export default DetailsView;
