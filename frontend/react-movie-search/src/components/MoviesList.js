@@ -1,27 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory, NavLink, useParams } from 'react-router-dom';
 import MoviesListGrid from './MoviesListGrid';
 
-
+let firstRun = true;
 function MoviesList(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
   const [itemsAmt, setItemsAmt] = useState(null);
 
-  const [pagenum, setPagenum] = useState(1);
+  const {t,p} = useParams();
+  const [pagenum, setPagenum] = useState(p); //used to be hardcoded 1
   const [resetPagenum, setResetPagenum] = useState(props.pageReset);
-  
+
+  const history = useHistory();
   useEffect(() => {
-    let url;
+    console.log(history);
     setResetPagenum(props.pageReset);
+
     if(resetPagenum === true){
-      url = `http://localhost:5000/api/s=${props.title}&page=1`
-      setPagenum(1);
       setResetPagenum(false);
-    } else {
-      url = `http://localhost:5000/api/s=${props.title}&page=${pagenum}`
-    }
-    fetch(url)
+      console.log('reset-is-true');
+
+      if(firstRun){ //this should only run on direct form submit, and not browser back.
+        console.log('only-form-submit');
+        firstRun = false;
+        history.push(`/t=${props.title}&p=1`)
+      } else { //This should only run on browser back, and not submit.
+        console.log('only-back-not-submit')
+        history.push(`/t=${props.title}&p=${p}`)
+      }
+    }//Page change functions will skip this if block.
+
+    fetch(`http://localhost:5000/api/s=${props.title}&page=${p}`)
     .then(res => res.json())
     .then(
       (result) => {
@@ -38,12 +49,12 @@ function MoviesList(props) {
         setError(error);
       }
     )
-  }, [props.title, pagenum])
+  }, [pagenum, props.title])
 
   let pages = Math.ceil(itemsAmt / 10);
 
-  const onChangePagenum = event => {
-    setPagenum(event.target.value);
+  const onChangePagenum = i => {
+    setPagenum(i+1);
     setResetPagenum(false);
   };
 
@@ -73,17 +84,21 @@ function MoviesList(props) {
       <div className="pagination-controls">
         <p>pages: {pages} -- items: {itemsAmt}</p>
 
-        <select value={pagenum} onChange={onChangePagenum}>
-          {[...Array(pages)].map((x, i) =>
-            <option value={i+1} key={i+1}>{i+1}</option>
-          )}
-        </select>
+        <div>
+        {[...Array(pages)].map((x, i) => (
+          <span key={i+1}> 
+            <NavLink to={`/t=${props.title}&p=${parseInt(i+1)}`} onClick={() => onChangePagenum(i)}>{i+1}</NavLink>-
+          </span>
+        ))}
+        </div>
 
-        <button onClick={pageBack}>«</button>
-        <button onClick={pageForward}>»</button>
-      </div>
+        <NavLink to={`/t=${props.title}&p=${parseInt(pagenum-1)}`} onClick={pageBack}>«</NavLink>
+        <NavLink to={`/t=${props.title}&p=${parseInt(pagenum+1)}`} onClick={pageForward}>»</NavLink>
+      </div> 
+      
 
       <MoviesListGrid items={items} />
+
       </>
     );
   }
