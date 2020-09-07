@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useParams, useHistory} from "react-router-dom";
 import SpecificMovieDetails from './SpecificMovieDetails';
+import './DetailsView.css';
 
 function DetailsView() {
     const [error, setError] = useState(null);
@@ -48,7 +49,7 @@ function DetailsView() {
     } else {
     return (
         <>
-            <button onClick={goBackFunction}>Back</button>
+            <button onClick={goBackFunction} className="back-button">Back</button>
             <SpecificMovieDetails items={items} />
         </>
         );

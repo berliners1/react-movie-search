@@ -1,0 +1,18 @@
+.pagination-controls{
+    background:black;
+    text-align:center;
+}
+.stats{
+
+}
+.all-pages{
+    margin-top:0.75rem;
+}
+.all-pages span:not(:last-child)::after{
+    content:" - ";
+}
+.forward-backward a{
+    font-size:30px;
+    margin:0 0.5rem;
+    color:white;
+}

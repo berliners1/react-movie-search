@@ -1,0 +1,14 @@
+.back-button{
+    background:none;
+    border:none;
+    box-shadow:none;
+    color:white;
+    font-weight:bold;
+    font-size:32px;
+    text-decoration:underline;
+    margin-left:1rem;
+    cursor:pointer;
+}
+.back-button::before{
+    content:"«";
+}

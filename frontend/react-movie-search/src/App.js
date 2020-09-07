@@ -22,6 +22,7 @@ function App() {
 
   return (
     <>
+    <h1>React Movie Search</h1>
     <Router>
     
       <Switch>

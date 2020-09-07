@@ -1,0 +1,23 @@
+.details{
+    display:flex;
+    max-width:1250px;
+    margin:2rem auto;
+}
+.details-left,.details-right{
+    width:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.details-left{
+    flex-direction:column;
+}
+.details-left p{
+    max-width:500px;
+    font-size:22px;
+    margin-top:1rem;
+    text-align:center;
+}
+.details-right{
+    font-size:24px;
+}
