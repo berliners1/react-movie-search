@@ -10,3 +10,6 @@
 .all-pages span:not(:last-child)::after{
     content:" - ";
 }
+.page-indicator{
+    font-weight:bold;
+}

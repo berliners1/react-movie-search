@@ -71,9 +71,9 @@ function MoviesList(props) {
         <>
         <div className="pagination-controls">
           <div className="stats">
-            <p>pages: {pages}</p>
-            <p>movies: {itemsAmt}</p>
-            <p>current page: {p}</p>
+            <p>Pages: {pages}</p>
+            <p>Movies: {itemsAmt}</p>
+            <p className="page-indicator">Current Page: {p}</p>
           </div>
   
           <div className="all-pages">

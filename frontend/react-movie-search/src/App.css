@@ -15,6 +15,9 @@ a{
   color:cyan;
   text-decoration:none;
 }
+a:visited{
+  color:magenta;
+}
 
 h1, h2{
   text-align:center;
