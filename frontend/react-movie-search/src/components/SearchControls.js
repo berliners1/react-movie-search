@@ -9,7 +9,7 @@ function SearchControls(props) {
     useEffect(() => {
         if(t && p){
             console.log('both t and p have inputs');
-            props.childToParent(t);
+            props.childToParent(t, false);
         }
 
         //if title exists in url parameters, and if input is empty
@@ -26,7 +26,7 @@ function SearchControls(props) {
     //Pass API data to MoviesList here:
     function passApiData(event){
         event.preventDefault();
-        props.childToParent(title);
+        props.childToParent(title, true);
 
         history.push(`/t=${title}&p=1`);
         console.log('initialtest');

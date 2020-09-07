@@ -12,10 +12,10 @@ function App() {
     const[pageReset, setPageReset] = useState(null);
 
     //get data from Controls to send to MoviesList
-    function addNewDataHandler(title){
+    function addNewDataHandler(title, ifToReset){
       setSearchedMovieName(title);
       setShowMoviesList(true);
-      setPageReset(true); //reset pages on each title search
+      setPageReset(ifToReset); //reset pages on each title search
       console.log('runs only on submit?');
     }
 
