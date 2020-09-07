@@ -15,7 +15,7 @@ function MoviesListGrid(props){
                         </div>
                         
                         {item.Poster === "N/A" ? 
-                        (<div class="no-poster-found">No Poster Found</div>) : 
+                        (<div className="no-poster-found">No Poster Found</div>) : 
                         <img src={item.Poster} alt={"Poster for " + item.Title} />}
                     </NavLink>
                 </li>

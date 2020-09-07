@@ -8,8 +8,8 @@ function SpecificMovieDetails(props){
         <h2>{item.Title}</h2>
         <div className="details">
             <div className="details-left">
-                {item.Poster === "N/A" ? 
-                (<div class="no-poster-found">No Poster Found</div>) : 
+                {item.Poster === "N/A" || item.Poster === undefined ? 
+                (<div className="no-poster-found">No Poster Found</div>) : 
                 <img src={item.Poster} alt={"Poster for " + item.Title} />}
                 <p>{item.Plot}</p>
             </div>

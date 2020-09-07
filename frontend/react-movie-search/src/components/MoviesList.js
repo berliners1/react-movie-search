@@ -59,20 +59,6 @@ function MoviesList(props) {
     setResetPagenum(false);
   };
 
-  const pageBack = () => {
-    setResetPagenum(false);
-    if(pagenum > 1){
-      setPagenum(pagenum - 1);
-    }
-  }
-  
-  const pageForward = () => {
-    setResetPagenum(false);
-    if(pagenum < pages){
-      setPagenum(parseInt(pagenum) + 1);
-    }
-  }
-
   if (error) {
     return <div>Error - could not search with these queries.</div>;
   } else if (!isLoaded) {
@@ -87,6 +73,7 @@ function MoviesList(props) {
           <div className="stats">
             <p>pages: {pages}</p>
             <p>movies: {itemsAmt}</p>
+            <p>current page: {p}</p>
           </div>
   
           <div className="all-pages">
@@ -96,11 +83,6 @@ function MoviesList(props) {
             </span>
           ))}
           </div>
-  
-        <div className="forward-backward">
-          <NavLink to={`/t=${props.title}&p=${parseInt(pagenum) - 1}`} onClick={pageBack}>«</NavLink>
-          <NavLink to={`/t=${props.title}&p=${parseInt(pagenum) + 1}`} onClick={pageForward}>»</NavLink>
-        </div>
           
         </div> 
         
